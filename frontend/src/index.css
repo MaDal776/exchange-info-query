@@ -1,0 +1,295 @@
+/* 全局样式 */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* 容器样式 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 标题样式 */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+}
+
+/* 链接样式 */
+a {
+  color: #03a9f4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 按钮样式 */
+button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0d8bf2;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 表单元素样式 */
+select, input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+/* 代币选择器样式 */
+.token-selector {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: 10px;
+}
+
+.token-selector label {
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.token-input-container {
+  position: relative;
+  width: 250px;
+}
+
+.token-input-container input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.token-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-top: 4px;
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.token-dropdown-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.token-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.token-item:hover {
+  background-color: #444;
+}
+
+.token-item.selected {
+  background-color: #2196f3;
+  color: white;
+}
+
+.token-symbol {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.token-name {
+  color: #aaa;
+}
+
+/* 表格样式 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+th {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+tr:hover {
+  background-color: #1a1a1a;
+}
+
+/* 状态指示器样式 */
+.status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-open {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-closed {
+  background-color: #f44336;
+  color: white;
+}
+
+.status-maintenance {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* 更新时间样式 */
+.update-time {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* 控制区域样式 */
+.controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.controls button {
+  height: 38px; /* 与输入框高度一致 */
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+/* 加载指示器样式 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loading::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #2196f3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 合约地址和复制按钮样式 */
+.contract-address {
+  max-width: 200px;
+}
+
+.address-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.address-container a {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 复制按钮样式 */
+.copy-btn {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background-color: #444;
+}
+
+.copy-btn.copied {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  table {
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 8px 10px;
+  }
+  
+  .contract-address {
+    max-width: 150px;
+  }
+  
+  .address-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

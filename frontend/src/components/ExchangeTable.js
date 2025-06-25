@@ -32,19 +32,95 @@ function ExchangeTable({ data }) {
     return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`;
   };
   
+  // 根据链类型获取对应的区块链浏览器URL
+  const getExplorerUrl = (chain, address) => {
+    if (!address) return '#';
+    
+    // 转换为小写以便比较
+    const chainLower = chain.toLowerCase();
+    
+    // 根据链类型返回对应的区块链浏览器URL
+    if (chainLower.includes('ethereum') || chainLower === 'eth') {
+      return `https://etherscan.io/address/${address}`;
+    } else if (chainLower.includes('bsc') || chainLower.includes('binance')) {
+      return `https://bscscan.com/address/${address}`;
+    } else if (chainLower.includes('polygon') || chainLower === 'matic') {
+      return `https://polygonscan.com/address/${address}`;
+    } else if (chainLower.includes('arbitrum')) {
+      return `https://arbiscan.io/address/${address}`;
+    } else if (chainLower.includes('optimism')) {
+      return `https://optimistic.etherscan.io/address/${address}`;
+    } else if (chainLower.includes('avalanche') || chainLower === 'avax') {
+      return `https://snowtrace.io/address/${address}`;
+    } else if (chainLower.includes('fantom') || chainLower === 'ftm') {
+      return `https://ftmscan.com/address/${address}`;
+    } else if (chainLower.includes('solana') || chainLower === 'sol') {
+      return `https://solscan.io/account/${address}`;
+    } else if (chainLower.includes('tron') || chainLower === 'trx') {
+      return `https://tronscan.org/#/address/${address}`;
+    } else {
+      // 默认使用以太坊浏览器
+      return `https://etherscan.io/address/${address}`;
+    }
+  };
+  
   // 合约地址复制功能
   const [copiedAddress, setCopiedAddress] = useState(null);
   
   const copyToClipboard = (address) => {
     if (!address) return;
     
-    navigator.clipboard.writeText(address)
-      .then(() => {
-        setCopiedAddress(address);
-        // 2秒后重置复制状态
+    // 检查clipboard API是否可用
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address)
+        .then(() => {
+          setCopiedAddress(address);
+          // 2秒后重置复制状态
+          setTimeout(() => setCopiedAddress(null), 2000);
+        })
+        .catch(err => {
+          console.error('复制失败:', err);
+          // 使用备用方案
+          fallbackCopyToClipboard(address);
+        });
+    } else {
+      // 备用复制方案
+      fallbackCopyToClipboard(address);
+    }
+  };
+  
+  // 备用复制方法
+  const fallbackCopyToClipboard = (text) => {
+    try {
+      // 创建临时文本区域
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      
+      // 避免滚动到底部
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      // 执行复制命令
+      const successful = document.execCommand('copy');
+      
+      // 清理并提示
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        setCopiedAddress(text);
         setTimeout(() => setCopiedAddress(null), 2000);
-      })
-      .catch(err => console.error('复制失败:', err));
+      } else {
+        console.error('备用复制方法失败');
+      }
+    } catch (err) {
+      console.error('备用复制方法错误:', err);
+    }
   };
 
   return (
@@ -85,7 +161,7 @@ function ExchangeTable({ data }) {
                   {chain.contract_address ? (
                     <div className="address-container">
                       <a 
-                        href={`https://etherscan.io/address/${chain.contract_address}`} 
+                        href={getExplorerUrl(chain.chain, chain.contract_address)} 
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
@@ -115,3 +191,4 @@ function ExchangeTable({ data }) {
 }
 
 export default ExchangeTable;
+

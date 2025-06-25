@@ -10,7 +10,7 @@ require('dotenv').config({ path: '../.env' });
 
 // 创建Express应用
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // 中间件
 app.use(express.json());
@@ -110,11 +110,20 @@ app.get('/api/status', async (req, res) => {
 });
 
 // 启动服务器
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-  
+//app.listen(port, () => {
+//  console.log(`Server running on port ${port}`);
+//  
+//  // 启动定时任务
+//  Scheduler.startScheduledTasks();
+//});
+//
+// 启动服务器
+app.listen(port, 'localhost', () => {
+  console.log(`Server running on port ${port} (0.0.0.0)`);
+
   // 启动定时任务
   Scheduler.startScheduledTasks();
 });
+
 
 module.exports = app;

@@ -112,11 +112,12 @@ pm2 start ecosystem.config.js
 3. 配置Nginx (示例配置)
 ```nginx
 server {
-    listen 80;
-    server_name your-domain.com;
+    listen 8081;
+    server_name your ip;  # 替换为您的域名或IP
 
-    location /api {
-        proxy_pass http://localhost:3000;
+    # 前端应用
+    location / {
+        proxy_pass http://localhost:3001;  # Next.js前端服务 如果你是3000端口 这里修改为3000
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -124,10 +125,12 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 
-    location / {
-        root /path/to/exchange-info-query/frontend/build;
-        index index.html;
-        try_files $uri $uri/ /index.html;
+    # API请求
+    location /api {
+        proxy_pass http://localhost:4000;  # Express后端服务
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
     }
 }
 ```

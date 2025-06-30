@@ -21,7 +21,7 @@ class RawDataLogger {
       
       // 生成文件名，包含时间戳
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const fileName = `${endpoint.replace(/\//g, '_')}_${timestamp}.json`;
+      const fileName = `${endpoint.replace(/\//g, '_')}.json`;
       const filePath = path.join(dirPath, fileName);
       
       // 写入数据
